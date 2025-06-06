@@ -2,45 +2,65 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
+  }
+  
+  body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f2f5;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-}
-
-.container {
+  }
+  
+  .container {
     text-align: center;
     background: white;
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
+  }
+  
+  h1 {
     color: #333;
-    margin-bottom: 2rem;
-}
-
-.timer-container {
-    margin-bottom: 2rem;
-}
-
-.timer {
+    margin-bottom: 1.5rem;
+  }
+  
+  .settings {
+    margin-bottom: 1rem;
+  }
+  
+  .settings label {
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  
+  .settings input {
+    width: 60px;
+    padding: 0.3rem;
+    margin-left: 0.3rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  #time {
     font-size: 4rem;
     font-weight: bold;
     color: #4a90e2;
-}
-
-.controls {
+    margin: 1.5rem 0;
+  }
+  
+  #mode {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .controls {
     margin-bottom: 2rem;
-}
-
-.btn {
+  }
+  
+  .btn {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
     border: none;
@@ -48,40 +68,25 @@ h1 {
     cursor: pointer;
     margin: 0 0.5rem;
     transition: background-color 0.3s;
-}
-
-#startBtn {
+  }
+  
+  #start {
     background-color: #4CAF50;
     color: white;
-}
-
-#pauseBtn {
+  }
+  
+  #pause {
     background-color: #f44336;
     color: white;
-}
-
-#resetBtn {
+  }
+  
+  #reset {
     background-color: #2196F3;
     color: white;
-}
-
-.mode-selector {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.mode-btn {
-    padding: 0.5rem 1rem;
-    border: 2px solid #4a90e2;
-    border-radius: 5px;
-    background: none;
-    color: #4a90e2;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.mode-btn.active {
-    background-color: #4a90e2;
+  }
+  
+  #applySettings {
+    background-color: #ff9800;
     color: white;
-}
+  }
+  
