@@ -2,27 +2,31 @@ let timer = null;
 let isRunning = false;
 let currentMode = 'pomodoro';
 
-// デフォルト時間（秒）
+// 各モードの秒数格納オブジェクト
 const times = {
-  pomodoro: 25 * 60,
-  shortBreak: 5 * 60,
-  longBreak: 15 * 60
+  pomodoro:   25 * 60,
+  shortBreak:  5 * 60,
+  longBreak:  15 * 60
 };
 
-// 入力欄の値を times に反映する
+// 入力欄から分・秒を読み取って times を更新
 function updateTimesFromInput() {
-  const w = parseInt(document.getElementById('workTime').value, 10);
-  const s = parseInt(document.getElementById('shortBreakTime').value, 10);
-  const l = parseInt(document.getElementById('longBreakTime').value, 10);
-  times.pomodoro   = (isNaN(w) ? 25 : w) * 60;
-  times.shortBreak = (isNaN(s) ?  5 : s) * 60;
-  times.longBreak  = (isNaN(l) ? 15 : l) * 60;
+  const wM = parseInt(document.getElementById('workMin').value,      10);
+  const wS = parseInt(document.getElementById('workSec').value,      10);
+  const sM = parseInt(document.getElementById('shortMin').value,     10);
+  const sS = parseInt(document.getElementById('shortSec').value,     10);
+  const lM = parseInt(document.getElementById('longMin').value,      10);
+  const lS = parseInt(document.getElementById('longSec').value,      10);
+
+  times.pomodoro   = ((isNaN(wM) ? 25 : wM) * 60) + (isNaN(wS) ? 0 : wS);
+  times.shortBreak = ((isNaN(sM) ?  5 : sM) * 60) + (isNaN(sS) ? 0 : sS);
+  times.longBreak  = ((isNaN(lM) ? 15 : lM) * 60) + (isNaN(lS) ? 0 : lS);
 }
 
-// 現在残り時間（秒）
+// 現在の残秒数
 let timeLeft = times.pomodoro;
 
-// 表示を更新
+// 表示更新
 function updateDisplay() {
   const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
   const s = String(timeLeft % 60).padStart(2, '0');
@@ -42,7 +46,6 @@ function setMode(mode) {
   currentMode = mode;
   updateTimesFromInput();
   timeLeft = times[mode];
-  // ボタンの active 切り替え
   document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
   document.getElementById({
     pomodoro:   'pomodoroBtn',
@@ -63,7 +66,7 @@ function startTimer() {
     } else {
       clearInterval(timer);
       isRunning = false;
-      // 自動で次モードへ
+      // 自動切替：ポモドーロ→短休憩、休憩→ポモドーロ
       if (currentMode === 'pomodoro') {
         setMode('shortBreak');
         startTimer();
@@ -88,17 +91,14 @@ function resetTimer() {
   updateDisplay();
 }
 
-// イベントリスナー
-document.getElementById('applySettings').addEventListener('click', () => {
-  resetTimer();
-});
-document.getElementById('startBtn').addEventListener('click', startTimer);
-document.getElementById('pauseBtn').addEventListener('click', pauseTimer);
-document.getElementById('resetBtn').addEventListener('click', resetTimer);
+// 各種イベント
+document.getElementById('applySettings').addEventListener('click', () => resetTimer());
+document.getElementById('startBtn').      addEventListener('click', startTimer);
+document.getElementById('pauseBtn').      addEventListener('click', pauseTimer);
+document.getElementById('resetBtn').      addEventListener('click', resetTimer);
+document.getElementById('pomodoroBtn').   addEventListener('click', () => setMode('pomodoro'));
+document.getElementById('shortBreakBtn'). addEventListener('click', () => setMode('shortBreak'));
+document.getElementById('longBreakBtn').  addEventListener('click', () => setMode('longBreak'));
 
-document.getElementById('pomodoroBtn').addEventListener('click', () => setMode('pomodoro'));
-document.getElementById('shortBreakBtn').addEventListener('click', () => setMode('shortBreak'));
-document.getElementById('longBreakBtn').addEventListener('click', () => setMode('longBreak'));
-
-// 初期表示
+// 初期化
 setMode('pomodoro');

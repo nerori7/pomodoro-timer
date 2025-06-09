@@ -12,15 +12,24 @@
 
     <!-- 設定セクション -->
     <div class="settings">
-      <label>作業時間:
-        <input type="number" id="workTime" value="25" min="1"> 分
-      </label>
-      <label>短い休憩:
-        <input type="number" id="shortBreakTime" value="5" min="1"> 分
-      </label>
-      <label>長い休憩:
-        <input type="number" id="longBreakTime" value="15" min="1"> 分
-      </label>
+      <div class="setting-item">
+        <label>作業時間:
+          <input type="number" id="workMin"      value="25" min="0"> 分
+          <input type="number" id="workSec"      value="0"  min="0" max="59"> 秒
+        </label>
+      </div>
+      <div class="setting-item">
+        <label>短い休憩:
+          <input type="number" id="shortMin"     value="5"  min="0"> 分
+          <input type="number" id="shortSec"     value="0"  min="0" max="59"> 秒
+        </label>
+      </div>
+      <div class="setting-item">
+        <label>長い休憩:
+          <input type="number" id="longMin"      value="15" min="0"> 分
+          <input type="number" id="longSec"      value="0"  min="0" max="59"> 秒
+        </label>
+      </div>
       <button id="applySettings">設定を保存</button>
     </div>
 
@@ -40,8 +49,8 @@
     <!-- モード切替ボタン -->
     <div class="mode-selector">
       <button class="mode-btn active" id="pomodoroBtn">ポモドーロ</button>
-      <button class="mode-btn" id="shortBreakBtn">短い休憩</button>
-      <button class="mode-btn" id="longBreakBtn">長い休憩</button>
+      <button class="mode-btn"         id="shortBreakBtn">短い休憩</button>
+      <button class="mode-btn"         id="longBreakBtn">長い休憩</button>
     </div>
   </div>
 
