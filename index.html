@@ -2,22 +2,42 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ポモドーロタイマー</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
     <h1>ポモドーロタイマー</h1>
 
-    <div class="timer" id="time">25:00</div>
-    <div class="mode-label" id="mode">作業中</div>
-
-    <div class="controls">
-      <button class="btn start" id="start">開始</button>
-      <button class="btn pause" id="pause">一時停止</button>
-      <button class="btn reset" id="reset">リセット</button>
+    <!-- 設定セクション -->
+    <div class="settings">
+      <label>作業時間:
+        <input type="number" id="workTime" value="25" min="1"> 分
+      </label>
+      <label>短い休憩:
+        <input type="number" id="shortBreakTime" value="5" min="1"> 分
+      </label>
+      <label>長い休憩:
+        <input type="number" id="longBreakTime" value="15" min="1"> 分
+      </label>
+      <button id="applySettings">設定を保存</button>
     </div>
 
+    <!-- タイマー表示 -->
+    <div class="timer">
+      <div id="modeLabel">作業中</div>
+      <div id="timeDisplay">25:00</div>
+    </div>
+
+    <!-- コントロールボタン -->
+    <div class="controls">
+      <button class="btn start" id="startBtn">開始</button>
+      <button class="btn pause" id="pauseBtn">一時停止</button>
+      <button class="btn reset" id="resetBtn">リセット</button>
+    </div>
+
+    <!-- モード切替ボタン -->
     <div class="mode-selector">
       <button class="mode-btn active" id="pomodoroBtn">ポモドーロ</button>
       <button class="mode-btn" id="shortBreakBtn">短い休憩</button>
