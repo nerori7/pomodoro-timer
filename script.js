@@ -1,20 +1,40 @@
 let timer;
 let isRunning = false;
-let currentMode = "work"; // または "break"
 let timeLeft = 25 * 60;
 
+const MODES = {
+  pomodoro: 25 * 60,
+  shortBreak: 5 * 60,
+  longBreak: 15 * 60
+};
+
+let currentMode = "pomodoro";
+
 const timeDisplay = document.getElementById("time");
-const modeDisplay = document.getElementById("mode");
+const modeLabel = document.getElementById("mode");
 const startBtn = document.getElementById("start");
 const pauseBtn = document.getElementById("pause");
 const resetBtn = document.getElementById("reset");
-const applyBtn = document.getElementById("applySettings");
+
+const modeButtons = {
+  pomodoro: document.getElementById("pomodoroBtn"),
+  shortBreak: document.getElementById("shortBreakBtn"),
+  longBreak: document.getElementById("longBreakBtn")
+};
 
 function updateDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   timeDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-  modeDisplay.textContent = currentMode === "work" ? "作業中" : "休憩中";
+  modeLabel.textContent = currentMode === "pomodoro" ? "作業中" : currentMode === "shortBreak" ? "短い休憩" : "長い休憩";
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  timeLeft = MODES[mode];
+  updateDisplay();
+  document.querySelectorAll(".mode-btn").forEach(btn => btn.classList.remove("active"));
+  modeButtons[mode].classList.add("active");
 }
 
 function startTimer() {
@@ -25,7 +45,14 @@ function startTimer() {
       timeLeft--;
       updateDisplay();
     } else {
-      switchMode();
+      clearInterval(timer);
+      isRunning = false;
+      if (currentMode === "pomodoro") {
+        setMode("shortBreak");
+        startTimer();
+      } else {
+        setMode("pomodoro");
+      }
     }
   }, 1000);
 }
@@ -37,25 +64,18 @@ function pauseTimer() {
 
 function resetTimer() {
   pauseTimer();
-  const baseMinutes = currentMode === "work"
-    ? parseInt(document.getElementById("workTime").value)
-    : parseInt(document.getElementById("breakTime").value);
-  timeLeft = baseMinutes * 60;
-  updateDisplay();
+  setMode(currentMode);
 }
-
-function switchMode() {
-  currentMode = currentMode === "work" ? "break" : "work";
-  resetTimer();
-  startTimer();
-}
-
-applyBtn.addEventListener("click", () => {
-  resetTimer();
-});
 
 startBtn.addEventListener("click", startTimer);
 pauseBtn.addEventListener("click", pauseTimer);
 resetBtn.addEventListener("click", resetTimer);
 
-updateDisplay();
+Object.entries(modeButtons).forEach(([mode, button]) => {
+  button.addEventListener("click", () => {
+    pauseTimer();
+    setMode(mode);
+  });
+});
+
+setMode("pomodoro");
